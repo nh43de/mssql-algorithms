@@ -12,3 +12,4 @@ List:
 - Tally Table
 - Time Period Generator
 - Probability Space Interval Enumeration (Omega tables)
+- NASDAQ stock price data tables and views
