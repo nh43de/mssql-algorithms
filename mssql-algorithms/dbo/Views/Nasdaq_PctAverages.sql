@@ -12,7 +12,7 @@ SELECT
         LEAD([Open]) OVER (PARTITION BY Ticker ORDER BY Date) "Next Open" ,
         LEAD([Close]) OVER (PARTITION BY Ticker ORDER BY Date) "Next Close" ,
         [Volume]
-FROM    [PermaData].[dbo].[NASDAQ_Historical]
+FROM    [dbo].[NASDAQ_Historical]
 --WHERE Ticker = 'MSFT'
 ), calcs AS ( 
 	SELECT 
