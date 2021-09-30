@@ -7,7 +7,6 @@
 -- =============================================
 CREATE FUNCTION [dbo].[Wiener Process Table] 
 (
-	@T float, -- "T is time length of all steps",
 	@N int, -- N periods
 	@mu float, --mu is the drift or mean of the walk step
 	@sigma float --sigma is the stddev of the walk step
@@ -16,19 +15,14 @@ RETURNS
 @rtn TABLE 
 (
 	n int,
-	h float,
-	t float,
 	value float
 )
 AS
 BEGIN
 	DECLARE @h float; -- h is the step size
-	SET @h = @T/@N;
 
 	INSERT INTO @rtn
 	SELECT 
-		0,
-		@h,
 		0,
 		0;
 
@@ -47,8 +41,6 @@ BEGIN
 		INSERT INTO @rtn
 		SELECT
 			@i,
-			@h,
-			@i * @h,
 			@walk_sum;
 
 		SET @i = @i + 1;
@@ -56,3 +48,7 @@ BEGIN
 
 	RETURN 
 END
+
+
+GO
+
