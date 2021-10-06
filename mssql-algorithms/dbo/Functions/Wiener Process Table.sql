@@ -5,50 +5,45 @@
 -- Create date: 
 -- Description:	
 -- =============================================
-CREATE FUNCTION [dbo].[Wiener Process Table] 
-(
-	@N int, -- N periods
-	@mu float, --mu is the drift or mean of the walk step
-	@sigma float --sigma is the stddev of the walk step
+CREATE FUNCTION [dbo].[Wiener Process Table] (
+    @T     FLOAT, -- "T is time length of all steps",
+    @N     INT   -- N periods
 )
-RETURNS 
-@rtn TABLE 
-(
-	n int,
-	value float
+RETURNS @rtn TABLE (
+    [n]     INT,
+    [h]     FLOAT,
+    [t]     FLOAT,
+    [value] FLOAT
 )
 AS
 BEGIN
-	DECLARE @h float; -- h is the step size
+    DECLARE @h FLOAT; -- h is the step size
+    SET @h = @T / @N;
 
-	INSERT INTO @rtn
-	SELECT 
-		0,
-		0;
+    INSERT INTO @rtn
+    SELECT 0,
+           @h,
+           0,
+           0;
 
-	DECLARE @i int;
-	SET @i = 1;
+    DECLARE @i INT;
+    SET @i = 1;
 
-	DECLARE @walk_sum float;
-	SET @walk_sum = 0;
+    DECLARE @walk_sum FLOAT;
+    SET @walk_sum = 0;
 
-	WHILE @i <= @N BEGIN
-		SELECT	
-			@walk_sum = @walk_sum + 
-				dbo.[Box-MullerTransform](@mu,@sigma)
-		from rndView a;
+    WHILE @i <= @N
+    BEGIN
+        SELECT @walk_sum = @walk_sum + [dbo].[Box-MullerTransform](0, @h);
+		
+        INSERT INTO @rtn
+        SELECT @i,
+               @h,
+               @i * @h,
+               @walk_sum;
 
-		INSERT INTO @rtn
-		SELECT
-			@i,
-			@walk_sum;
+        SET @i = @i + 1;
+    END;
 
-		SET @i = @i + 1;
-	END
-
-	RETURN 
-END
-
-
-GO
-
+    RETURN;
+END;
