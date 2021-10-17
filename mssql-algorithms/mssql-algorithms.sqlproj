@@ -92,5 +92,6 @@
     <Build Include="dbo\Functions\Omega Table.sql" />
     <Build Include="dbo\Functions\Generate Omega Intervals.sql" />
     <Build Include="dbo\User Defined Types\Hierarchy.sql" />
+    <Build Include="dbo\Functions\Wiener Process With Drift and Variance.sql" />
   </ItemGroup>
 </Project>

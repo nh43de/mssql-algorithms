@@ -3,7 +3,7 @@ Some algorithms I've written in T-SQL (and some I've not)
 
 List:
 - Box-Muller Transform
-- Exponential Wiener Process
+- Exponential Wiener Process / Geometric Brownian Motion
 - Scaled Random Walk
 - Standard Brownian Motion
 - Wiener Process
